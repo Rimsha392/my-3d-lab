@@ -1,0 +1,282 @@
+/*
+ * ============================================================
+ *  Lab 05(a) — style.css
+ *  HCI Principle: Separation of Concerns
+ *  ALL visual design lives here — zero inline styles in HTML,
+ *  zero style manipulation in JavaScript (JS only adds/removes
+ *  CSS classes; the actual look is defined here).
+ * ============================================================
+ */
+
+/* ----------------------------------------------------------
+   HCI PRINCIPLE: Aesthetic & Minimalist Design (Heuristic #8)
+   Use CSS custom properties so the whole palette is one place.
+   Changing --accent here updates every component instantly.
+   ---------------------------------------------------------- */
+:root {
+  --bg:        #f5f4f0;
+  --surface:   #ffffff;
+  --text:      #1a1a1a;
+  --text-muted:#6b6b6b;
+  --accent:    #2f54eb;
+  --accent-hover: #1d3dcc;
+  --danger:    #cf1322;
+  --radius:    12px;
+  --shadow:    0 2px 12px rgba(0,0,0,0.08);
+  --transition:0.18s ease;
+
+  /* Mood palette */
+  --calm:   #e8f4f8;
+  --focus:  #fff7e6;
+  --energy: #fff1f0;
+  --happy:  #f6ffed;
+}
+
+/* ----------------------------------------------------------
+   HCI PRINCIPLE: Readability & Typography
+   Good font choice and line-height reduce cognitive load.
+   ---------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+  line-height: 1.6;
+}
+
+/* ----------------------------------------------------------
+   HEADER
+   HCI PRINCIPLE: Visibility of System Status
+   Clear heading tells the user exactly where they are.
+   ---------------------------------------------------------- */
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+}
+
+/* ----------------------------------------------------------
+   MAIN LAYOUT
+   ---------------------------------------------------------- */
+main {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ----------------------------------------------------------
+   CARD
+   HCI PRINCIPLE: Grouping / Gestalt Proximity
+   Related controls are visually grouped in a card — users
+   immediately understand they belong together.
+   ---------------------------------------------------------- */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.card h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  align-self: flex-start;
+  border-bottom: 2px solid var(--bg);
+  padding-bottom: 0.5rem;
+  width: 100%;
+}
+
+.status-label {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* ----------------------------------------------------------
+   COUNTER DISPLAY
+   HCI PRINCIPLE: Visibility of System Status
+   Large number gives immediate, glanceable feedback.
+   ---------------------------------------------------------- */
+.counter {
+  font-size: 4rem;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+  transition: transform var(--transition), color var(--transition);
+}
+
+/* JS adds this class on each click — tiny bounce = feedback */
+.counter.bump {
+  transform: scale(1.25);
+  color: var(--accent-hover);
+}
+
+/* ----------------------------------------------------------
+   PRIMARY BUTTON
+   HCI PRINCIPLE: Affordance
+   Raised look, background colour, and cursor:pointer all
+   signal "this is clickable." Hover and active states confirm.
+
+   HCI PRINCIPLE: Feedback
+   :hover and :active give instant visual response.
+   ---------------------------------------------------------- */
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  padding: 0.65rem 1.8rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: var(--accent);
+  color: #fff;
+  transition: background var(--transition), transform var(--transition),
+              box-shadow var(--transition);
+  box-shadow: 0 2px 6px rgba(47,84,235,0.3);
+}
+
+button:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(47,84,235,0.4);
+}
+
+button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/*
+  HCI PRINCIPLE: Error Prevention
+  Disabled state is visually distinct — user cannot accidentally
+  interact with an unavailable action.
+*/
+button:disabled {
+  background: #d9d9d9;
+  color: #999;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Secondary / Reset button */
+button.secondary {
+  background: transparent;
+  color: var(--danger);
+  border: 1.5px solid var(--danger);
+  box-shadow: none;
+}
+
+button.secondary:hover:not(:disabled) {
+  background: #fff1f0;
+  border-color: var(--danger);
+  transform: translateY(-1px);
+}
+
+/* ----------------------------------------------------------
+   FEEDBACK MESSAGE
+   HCI PRINCIPLE: Visibility of System Status
+   Inline messages confirm actions without disrupting flow.
+   ---------------------------------------------------------- */
+.feedback {
+  font-size: 0.85rem;
+  font-weight: 500;
+  min-height: 1.2rem;
+  color: var(--accent);
+  transition: opacity var(--transition);
+}
+
+.feedback.error { color: var(--danger); }
+
+/* ----------------------------------------------------------
+   MOOD BUTTONS
+   HCI PRINCIPLE: Direct Manipulation + Immediate Feedback
+   Each button changes the environment right away.
+   ---------------------------------------------------------- */
+.mood-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.mood {
+  background: var(--bg);
+  color: var(--text);
+  border: 1.5px solid #e0e0e0;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  box-shadow: none;
+}
+
+.mood:hover {
+  border-color: var(--accent);
+  background: #eef1fd;
+  transform: translateY(-2px);
+}
+
+/* Active/selected mood — JS adds this class */
+.mood.active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(47,84,235,0.3);
+}
+
+.mood-label {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--text-muted);
+  transition: color var(--transition);
+}
+
+/* ----------------------------------------------------------
+   BODY MOOD THEMES — applied by JS on <body>
+   HCI PRINCIPLE: Aesthetic Coherence
+   The whole environment shifts with the user's choice,
+   not just an isolated element.
+   ---------------------------------------------------------- */
+body.mood-calm   { background: var(--calm);   }
+body.mood-focus  { background: var(--focus);  }
+body.mood-energy { background: var(--energy); }
+body.mood-happy  { background: var(--happy);  }
+
+/* ----------------------------------------------------------
+   FOOTER
+   ---------------------------------------------------------- */
+footer {
+  margin-top: 2rem;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+/* ----------------------------------------------------------
+   HCI PRINCIPLE: Accessibility — Focus Indicators
+   Keyboard users must be able to see which element has focus.
+   ---------------------------------------------------------- */
+button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}

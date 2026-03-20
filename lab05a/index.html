@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!--
+    HCI PRINCIPLE: Consistency & Standards (Nielsen's Heuristic #4)
+    Linking an external stylesheet keeps visual rules in one place,
+    so the same design language applies across all pages consistently.
+  -->
+  <link rel="stylesheet" href="style.css" />
+
+  <title>HCI Button Lab – Lab 05(a)</title>
+</head>
+<body>
+
+  <!--
+    HCI PRINCIPLE: Visibility of System Status (Nielsen's Heuristic #1)
+    The heading immediately tells the user what this page is for.
+    Users should always know where they are.
+  -->
+  <header>
+    <h1>HCI Interaction Lab</h1>
+    <p class="subtitle">Separation of Concerns Demo — Lab 05(a)</p>
+  </header>
+
+  <main>
+
+    <!--
+      HCI PRINCIPLE: Recognition over Recall (Nielsen's Heuristic #6)
+      Labels and counters are always visible so users don't have to
+      remember what they previously clicked.
+    -->
+    <section class="card" id="counter-section">
+
+      <h2>Click Counter</h2>
+
+      <!-- Status display — gives feedback on current state -->
+      <p class="status-label">You have clicked the button:</p>
+      <p class="counter" id="count-display" aria-live="polite">0</p>
+      <p class="status-label">times</p>
+
+      <!--
+        HCI PRINCIPLE: Affordance
+        The button LOOKS like something you can press — has visible
+        border, background, and hover/active states defined in CSS.
+
+        HCI PRINCIPLE: Accessibility
+        aria-label gives screen readers a clear description.
+      -->
+      <button
+        id="increment-btn"
+        aria-label="Increment counter"
+      >
+        Click Me
+      </button>
+
+      <!--
+        HCI PRINCIPLE: User Control & Freedom (Nielsen's Heuristic #3)
+        Always provide an undo / reset so users can recover from mistakes.
+      -->
+      <button
+        id="reset-btn"
+        class="secondary"
+        aria-label="Reset counter to zero"
+      >
+        Reset
+      </button>
+
+      <!-- Feedback message — shown/hidden by JavaScript -->
+      <p class="feedback" id="feedback-msg" aria-live="assertive"></p>
+
+    </section>
+
+
+    <!--
+      HCI PRINCIPLE: Error Prevention (Nielsen's Heuristic #5)
+      A disabled state prevents meaningless interaction (e.g. resetting 
+      when counter is already 0).
+    -->
+    <section class="card" id="color-section">
+
+      <h2>Color Mood Selector</h2>
+      <p class="status-label">Pick a mood — the background responds immediately.</p>
+
+      <!--
+        HCI PRINCIPLE: Direct Manipulation
+        Clicking a visible, labelled option directly changes the environment.
+        The effect is immediately visible (feedback loop closed fast).
+      -->
+      <div class="mood-buttons" role="group" aria-label="Mood selector">
+        <button class="mood" data-mood="calm"    aria-label="Calm mood">😌 Calm</button>
+        <button class="mood" data-mood="focus"   aria-label="Focus mood">🎯 Focus</button>
+        <button class="mood" data-mood="energy"  aria-label="Energy mood">⚡ Energy</button>
+        <button class="mood" data-mood="happy"   aria-label="Happy mood">😊 Happy</button>
+      </div>
+
+      <p class="mood-label" id="mood-label">No mood selected</p>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <p>
+      Lab 05(a) · Separation of Concerns ·
+      <span id="click-log">0 total interactions</span>
+    </p>
+  </footer>
+
+  <!--
+    HCI PRINCIPLE: Separation of Concerns (Software Engineering)
+    ALL behaviour lives in an external JS file — not inline.
+    This makes the code easier to maintain, test, and reuse.
+  -->
+  <script src="script.js"></script>
+
+</body>
+</html>
