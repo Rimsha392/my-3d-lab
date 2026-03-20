@@ -1,5 +1,5 @@
 import { Canvas, useFrame } from '@react-three/fiber'
-import { OrbitControls, Text, Stars, Float } from '@react-three/drei'
+import { OrbitControls, Text, Stars, Float, useTexture } from '@react-three/drei'
 import { useRef, useState } from 'react'
 
 function ParticleRing({ radius, count, color, speed }) {
@@ -28,12 +28,23 @@ function ParticleRing({ radius, count, color, speed }) {
 function NerdyCube() {
   const meshRef = useRef()
   const [hovered, setHovered] = useState(false)
+
+  const textures = useTexture([
+    'https://picsum.photos/seed/gaming123/512/512',      // 🎮 Gaming
+    'https://picsum.photos/seed/meme456/512/512',        // 🍕 Fun/Meme
+    'https://picsum.photos/seed/flowers789/512/512',     // 🌸 Flowers
+    'https://picsum.photos/seed/ocean321/512/512',       // 🌊 Ocean
+    'https://picsum.photos/seed/holographic654/512/512', // 🔮 Holographic
+    'https://picsum.photos/seed/electric987/512/512',    // ⚡ Lightning
+  ])
+
   useFrame(({ clock }) => {
     meshRef.current.rotation.x += 0.003
     meshRef.current.rotation.y += 0.007
     const scale = hovered ? 1 + Math.sin(clock.getElapsedTime() * 6) * 0.03 : 1
     meshRef.current.scale.setScalar(scale)
   })
+
   const faces = [
     { position: [0, 0, 1.01],  rotation: [0, 0, 0] },
     { position: [0, 0, -1.01], rotation: [0, Math.PI, 0] },
@@ -44,10 +55,16 @@ function NerdyCube() {
   ]
   const labels = ['RIMSHA', 'B23110006138', 'HCI & CG', 'LAB 05(c)', 'UOK · 2026', '{ code }']
   const colors = ['#00ffcc', '#ff00ff', '#00ccff', '#ffff00', '#ff6600', '#00ff88']
+
   return (
     <mesh ref={meshRef} onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)}>
       <boxGeometry args={[2, 2, 2]} />
-      <meshStandardMaterial color={hovered ? '#0a0a2a' : '#05050f'} emissive={hovered ? '#110022' : '#000011'} roughness={0.2} metalness={0.9} />
+      <meshStandardMaterial attach="material-0" map={textures[0]} roughness={0.4} metalness={0.3} />
+      <meshStandardMaterial attach="material-1" map={textures[1]} roughness={0.4} metalness={0.3} />
+      <meshStandardMaterial attach="material-2" map={textures[2]} roughness={0.4} metalness={0.3} />
+      <meshStandardMaterial attach="material-3" map={textures[3]} roughness={0.4} metalness={0.3} />
+      <meshStandardMaterial attach="material-4" map={textures[4]} roughness={0.4} metalness={0.3} />
+      <meshStandardMaterial attach="material-5" map={textures[5]} roughness={0.4} metalness={0.3} />
       {faces.map((face, i) => (
         <Text key={i} position={face.position} rotation={face.rotation} fontSize={0.24} color={colors[i]} anchorX="center" anchorY="middle" fontWeight="bold" outlineWidth={0.008} outlineColor="#000033" letterSpacing={0.05}>
           {labels[i]}
@@ -74,17 +91,14 @@ function WireframeCube() {
 export default function Cube({ onBack }) {
   return (
     <div style={{ width: '100vw', height: '100vh', background: '#000008', overflow: 'hidden' }}>
-      {/* Back button */}
       <button onClick={onBack} style={{ position: 'absolute', top: '16px', left: '16px', zIndex: 20, background: 'transparent', border: '1px solid #00ffcc44', color: '#00ffcc', padding: '6px 14px', borderRadius: '6px', fontFamily: 'monospace', fontSize: '11px', cursor: 'pointer', letterSpacing: '2px' }}>
         ← BACK
       </button>
-
       <div style={{ position: 'absolute', top: '16px', left: '50%', transform: 'translateX(-50%)', fontFamily: 'monospace', color: '#00ffcc', fontSize: '12px', letterSpacing: '3px', zIndex: 10 }}>
         {'> HCI_LAB_05(c).exe'}
       </div>
-
       <Canvas camera={{ position: [0, 0, 5.5], fov: 60 }}>
-        <ambientLight intensity={0.1} />
+        <ambientLight intensity={0.5} />
         <pointLight position={[5, 5, 5]}   color="#00ffcc" intensity={2} />
         <pointLight position={[-5, -5, -5]} color="#ff00ff" intensity={1.5} />
         <pointLight position={[0, 5, -5]}   color="#0066ff" intensity={1} />
