@@ -30,12 +30,12 @@ function NerdyCube() {
   const [hovered, setHovered] = useState(false)
 
   const textures = useTexture([
-    'https://picsum.photos/seed/gaming123/512/512',      // 🎮 Gaming
-    'https://picsum.photos/seed/meme456/512/512',        // 🍕 Fun/Meme
-    'https://picsum.photos/seed/flowers789/512/512',     // 🌸 Flowers
-    'https://picsum.photos/seed/ocean321/512/512',       // 🌊 Ocean
-    'https://picsum.photos/seed/holographic654/512/512', // 🔮 Holographic
-    'https://picsum.photos/seed/electric987/512/512',    // ⚡ Lightning
+    'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/uv_grid_opengl.jpg',
+    'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/crate.gif',
+    'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/hardwood2_diffuse.jpg',
+    'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/brick_diffuse.jpg',
+    'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/disturb.jpg',
+    'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/lava/lavatile.jpg',
   ])
 
   useFrame(({ clock }) => {
